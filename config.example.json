@@ -1,0 +1,25 @@
+{
+  "monitoredUsers": [
+    {
+      "userId": "123456789012345678",
+      "username": "User#1234",
+      "note": "Example user - replace with actual Discord user IDs"
+    }
+  ],
+  "notificationRecipients": [
+    {
+      "userId": "123456789012345678",
+      "username": "User#1234",
+      "note": "Example notification recipient"
+    }
+  ],
+  "settings": {
+    "logAllUsers": false,
+    "logJoin": true,
+    "logLeave": true,
+    "logMoveBetweenChannels": false,
+    "logMuteUnmute": false,
+    "logDeafenUndeafen": false,
+    "enableDmNotifications": true
+  }
+}
