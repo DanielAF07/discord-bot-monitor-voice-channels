@@ -14,6 +14,9 @@ COPY . .
 # Change ownership of files to discord user
 RUN chown -R discord:nodejs /app
 
+# Create volume for persistent config
+VOLUME ["/app/config.json"]
+
 USER discord
 
 CMD ["npm", "start"]
