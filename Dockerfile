@@ -2,17 +2,18 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+# Create user before copying files
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S discord -u 1001
 
+COPY package*.json ./
 RUN npm ci --only=production
 
 COPY . .
 
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S discord -u 1001
+# Change ownership of files to discord user
+RUN chown -R discord:nodejs /app
 
 USER discord
-
-EXPOSE 3000
 
 CMD ["npm", "start"]
