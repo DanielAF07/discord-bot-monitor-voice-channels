@@ -57,8 +57,31 @@ A personal Discord bot that logs when users join voice channels and sends DM not
 ## 📖 Usage
 
 ### Running the bot
+
+#### With Node.js
 ```bash
 npm start
+```
+
+#### With Docker
+```bash
+# Build the Docker image
+docker build -t voice-log-bot .
+
+# Run with Docker volume to persist config
+docker run -d \
+  --name voice-log-bot \
+  --env-file .env \
+  -v $(pwd)/config.json:/app/config.json \
+  voice-log-bot
+
+# Or run with a named volume (recommended)
+docker volume create voice-log-bot-config
+docker run -d \
+  --name voice-log-bot \
+  --env-file .env \
+  -v voice-log-bot-config:/app \
+  voice-log-bot
 ```
 
 ### Discord Slash Commands
