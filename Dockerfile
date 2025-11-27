@@ -11,12 +11,15 @@ RUN npm ci --only=production
 
 COPY . .
 
-# Change ownership of files to discord user
-RUN chown -R discord:nodejs /app
+# Create config directory for persistence
+RUN mkdir -p /app/data && \
+    chown -R discord:nodejs /app
 
-# Create volume for persistent config
-VOLUME ["/app/config.json"]
+# Create volume for persistent config directory
+VOLUME ["/app/data"]
 
 USER discord
+
+ENV NODE_ENV=production
 
 CMD ["npm", "start"]

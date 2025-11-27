@@ -1,7 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const configPath = path.join(__dirname, '..', '..', 'config.json');
+// Use configurable path for config file
+const configPath = process.env.CONFIG_PATH 
+  ? process.env.CONFIG_PATH
+  : process.env.NODE_ENV === 'production' 
+    ? path.join(__dirname, '..', '..', 'data', 'config.json')
+    : path.join(__dirname, '..', '..', 'config.json');
 
 function createDefaultConfig() {
   const defaultConfig = {
@@ -19,6 +24,12 @@ function createDefaultConfig() {
   };
 
   try {
+    // Ensure data directory exists in production
+    const configDir = path.dirname(configPath);
+    if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true });
+    }
+    
     fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2));
     console.log('📝 config.json created with default settings');
     console.log('💡 Use Discord slash commands to add users to monitor');
